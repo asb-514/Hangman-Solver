@@ -1,0 +1,122 @@
+\documentclass[titlepage, 11pt]{article}
+\usepackage[a4paper, total={6in, 9.5in}]{geometry}
+\usepackage{graphicx}
+\usepackage{amsfonts,amssymb}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{booktabs}
+\usepackage[T1]{fontenc}
+\usepackage{listings}
+\usepackage{color}
+\usepackage[colorlinks=true, linkcolor=blue, urlcolor=blue, citecolor=blue, pdfborder={0 0 255}]{hyperref}
+\usepackage{colortbl}
+\usepackage{url}
+\usepackage{xcolor}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{dirtytalk}
+\usepackage[semicolon, round]{natbib}
+\usepackage[ruled]{algorithm2e}
+\captionsetup[table]{skip=10pt}
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\SetKwComment{Comment}{$\triangleright$\ }{}
+\hypersetup{%
+  colorlinks=true,
+  linkcolor=blue,
+  linkbordercolor={0 0 1}
+}
+
+% \renewcommand\lstlistingname{Algorithm}
+% \renewcommand\lstlistlistingname{Algorithms}
+% \def\lstlistingautorefname{Alg.}
+
+% \lstdefinestyle{Python}{
+% language        = Python,
+% frame           = lines,
+% basicstyle      = \footnotesize,
+% keywordstyle    = \color{blue},
+% stringstyle     = \color{green},
+% commentstyle    = \color{red}\ttfamily
+% }
+
+%   \setlength{\parindent}{0.0in}
+%   \setlength{\parskip}{0.05in}
+
+\newcommand{\argmin}{\mathop{\mathrm{argmin}}}
+\newcommand{\argmax}{\mathop{\mathrm{argmax}}}
+\newcommand{\minimize}{\mathop{\mathrm{minimize}}}
+\newcommand{\maximize}{\mathop{\mathrm{maximize}}}
+\newcommand{\st}{\mathop{\mathrm{subject\,\,to}}}
+\newcommand{\dist}{\mathop{\mathrm{dist}}}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\renewcommand{\vec}[1]{\mathbf{#1}}
+
+\def\R{\mathbb{R}}
+\def\E{\mathbb{E}}
+\def\P{\mathbb{P}}
+\def\S{\mathbb{S}}
+\def\Cov{\mathrm{Cov}}
+\def\Var{\mathrm{Var}}
+\def\half{\frac{1}{2}}
+\def\quat{\frac{1}{4}}
+\def\sign{\mathrm{sign}}
+\def\supp{\mathrm{supp}}
+\def\th{\mathrm{th}}
+\def\tr{\mathrm{tr}}
+\def\dim{\mathrm{dim}}
+\def\dom{\mathrm{dom}}
+
+\begin{document}
+
+\title{
+  {Hangman Solver}
+}
+\author{Annangi Shashank Babu, EE21B021}
+
+\date{\today}
+\maketitle
+\newpage
+\setcounter{page}{1}
+\section{Introduction}%
+\label{sec:label}
+The objective of this document is to present an algorithmic strategy designed to play Hangman optimally. Our mission is to devise an intelligent and efficient approach that selects letters for guessing with the highest likelihood of success.
+\section{Algorithmic Overview}
+\begin{itemize}
+    \item The algorithm follows a systematic approach, utilizing a scoring mechanism to identify the most promising characters for the next guess.
+    \item The algorithm employs synchronization weighting, penalty consideration, starting value adjustments, and incremental factors to create a sophisticated scoring system that intelligently selects letters for guessing in the Hangman game.
+\end{itemize}
+\section{Scoring and Matching: Unraveling Word Similarity}
+\begin{itemize}
+        \item At the start of the algorithm, it aims to make an initial guess for the next letter based on the frequency of letters in the dictionary of potential words until certain percentage of the word is revealed (Found the sweetspot at around 20 percentage). This approach is often referred to as "frequency-based guessing" and provides a reasonable starting point when there is limited information about the target word.
+        \item The sync factor enhances pattern synchronization by considering the alignment of characters in both the guessed word pattern and the candidate dictionary words.
+        \item upon observation and experimentation, it has been noticed that the sync factor plays a pivotal role in the effectiveness of the optimized Hangman-playing algorithm. As a result of its significance, the sync factor is given an exponential weight to amplify its impact on the scoring system.
+        \item The second factor in the optimized Hangman-playing algorithm involves exponential decay to reward matching adjacent letters, elevating the significance of letter sequences and facilitating more refined and strategic letter selections. This thoughtful weighing of letter matches based on proximity provides deeper insights into potential word matches, contributing to more intelligent and accurate guesses as the game unfolds.
+        \item The decay factor is calculated using the formula \\ \texttt{inc = pow((short\_dash) / (len\_word), 1.1)}.
+        \\
+        Here, \texttt{short\_dash} represents the minimum length of the contiguous sequence of unknown letters (represented by dots) in the guessed word pattern, and \texttt{len\_word} represents the total length of the guessed word pattern. By applying a power of 1.1 to the ratio of \texttt{short\_dash} to \texttt{len\_word}, the algorithm introduces a decay function that rewards adjacent letter matches more than isolated ones. This enhancement allows matching letters in close proximity to each other to receive higher scores, promoting a more nuanced assessment of candidate words and further refining the guessing strategy for the Hangman game.
+        \item The dynamic decay factor allows the algorithm to adjust its scoring approach based on the specific word pattern and length of unknown letters. This adaptability enhances the algorithm's performance across various Hangman puzzles, making it a more versatile and effective strategy.
+\end{itemize}
+\section{Performance}%
+\label{sec:label}
+\begin{itemize}
+      \item The algorithm was put to the test in 1000 games, and it achieved an total of 607 wins, resulting in success rate of approximately 61 percent.
+        \item This success rate is a testament to the algorithm's intelligent and strategic approach to guessing letters. By dynamically adjusting its scoring system, prioritizing adjacent letter matches, and leveraging the significance of the "sync" factor, the algorithm consistently made informed and accurate guesses.
+
+
+\end{itemize}
+
+\label{sec:label}
+\begin{itemize}
+\item In conclusion, this endeavor to design an optimal Hangman-playing algorithm has been an enjoyable and rewarding journey. Throughout the process, I found great satisfaction in refining the weightings of various factors and discovering the significance of key parameters.
+        \item Playing with the algorithm was a fascinating experience. Witnessing how the scoring system intelligently weighed letter matches based on proximity and synchronization brought a new level of excitement and challenge to the Hangman game.
+
+\end{itemize}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Uncomment the lines below to add references using bibtex.
+% \bibliographystyle{plainnat}
+% \bibliography{references}
+
+\end{document}
